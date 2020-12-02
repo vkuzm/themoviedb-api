@@ -1,0 +1,206 @@
+{
+  "created_by": "travisbell",
+  "description": "The idea behind this list is to collect the live action comic book movies from within the Marvel franchise. Last updated on Dec 18, 2013.",
+  "favorite_count": 0,
+  "id": "1",
+  "items": [
+    {
+      "vote_average": 7.6,
+      "id": 284053,
+      "overview": "Thor is imprisoned on the other side of the universe and finds himself in a race against time to get back to Asgard to stop Ragnarok, the destruction of his home-world and the end of Asgardian civilization, at the hands of an all-powerful new threat, the ruthless Hela.",
+      "release_date": "2017-10-25",
+      "popularity": 116.349,
+      "adult": false,
+      "backdrop_path": "/kaIfm5ryEOwYg8mLbq8HkPuM1Fo.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        35,
+        14
+      ],
+      "vote_count": 14944,
+      "original_language": "en",
+      "original_title": "Thor: Ragnarok",
+      "poster_path": "/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg",
+      "title": "Thor: Ragnarok",
+      "video": false
+    },
+    {
+      "vote_average": 7.4,
+      "id": 315635,
+      "vote_count": 15196,
+      "release_date": "2017-07-05",
+      "popularity": 129.922,
+      "adult": false,
+      "backdrop_path": "/vc8bCGjdVp0UbMNLzHnHSLRbBWQ.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        878,
+        18
+      ],
+      "poster_path": "/c24sv2weTHPsmDa7jEMN0m2P3RT.jpg",
+      "original_language": "en",
+      "original_title": "Spider-Man: Homecoming",
+      "title": "Spider-Man: Homecoming",
+      "overview": "Following the events of Captain America: Civil War, Peter Parker, with the help of his mentor Tony Stark, tries to balance his life as an ordinary high school student in Queens, New York City, with fighting crime as his superhero alter ego Spider-Man as a new threat, the Vulture, emerges.",
+      "video": false
+    },
+    {
+      "vote_average": 7.6,
+      "id": 283995,
+      "vote_count": 15702,
+      "release_date": "2017-04-19",
+      "popularity": 67.579,
+      "adult": false,
+      "backdrop_path": "/aJn9XeesqsrSLKcHfHP4u5985hn.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        35,
+        878
+      ],
+      "poster_path": "/y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg",
+      "original_language": "en",
+      "original_title": "Guardians of the Galaxy Vol. 2",
+      "title": "Guardians of the Galaxy Vol. 2",
+      "overview": "The Guardians must fight to keep their newfound family together as they unravel the mysteries of Peter Quill's true parentage.",
+      "video": false
+    },
+    {
+      "vote_average": 7.8,
+      "id": 263115,
+      "overview": "In the near future, a weary Logan cares for an ailing Professor X in a hideout on the Mexican border. But Logan's attempts to hide from the world and his legacy are upended when a young mutant arrives, pursued by dark forces.",
+      "release_date": "2017-02-28",
+      "popularity": 77.237,
+      "adult": false,
+      "backdrop_path": "/yEv8c6i79vk06sZDC3Z9D8HQLVV.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        18,
+        878
+      ],
+      "vote_count": 15009,
+      "original_language": "en",
+      "original_title": "Logan",
+      "title": "Logan",
+      "poster_path": "/fnbjcRDYn6YviCcePDnGdyAkYsB.jpg",
+      "video": false
+    },
+    {
+      "vote_average": 7.4,
+      "id": 284052,
+      "overview": "After his career is destroyed, a brilliant but arrogant surgeon gets a new lease on life when a sorcerer takes him under her wing and trains him to defend the world against evil.",
+      "release_date": "2016-10-25",
+      "popularity": 97.651,
+      "adult": false,
+      "backdrop_path": "/aL53oMdZKZRJRH8txH07DLuleF9.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        14,
+        878
+      ],
+      "vote_count": 16024,
+      "original_language": "en",
+      "original_title": "Doctor Strange",
+      "poster_path": "/gwi5kL7HEWAOTffiA14e4SbOGra.jpg",
+      "title": "Doctor Strange",
+      "video": false
+    },
+    {
+      "vote_average": 6.5,
+      "id": 246655,
+      "vote_count": 9966,
+      "release_date": "2016-05-18",
+      "popularity": 205.477,
+      "adult": false,
+      "backdrop_path": "/2ex2beZ4ssMeOduLD0ILzXKCiep.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        878,
+        14
+      ],
+      "poster_path": "/2mtQwJKVKQrZgTz49Dizb25eOQQ.jpg",
+      "original_language": "en",
+      "original_title": "X-Men: Apocalypse",
+      "title": "X-Men: Apocalypse",
+      "overview": "After the re-emergence of the world's first mutant, world-destroyer Apocalypse, the X-Men must unite to defeat his extinction level plan.",
+      "video": false
+    },
+    {
+      "vote_average": 7.4,
+      "id": 271110,
+      "vote_count": 17101,
+      "release_date": "2016-04-27",
+      "popularity": 82.277,
+      "adult": false,
+      "backdrop_path": "/7FWlcZq3r6525LWOcvO9kNWurN1.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        12,
+        28,
+        878
+      ],
+      "poster_path": "/rAGiXaUfPzY7CDEyNKUofk3Kw2e.jpg",
+      "original_language": "en",
+      "original_title": "Captain America: Civil War",
+      "title": "Captain America: Civil War",
+      "overview": "Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.",
+      "video": false
+    },
+    {
+      "vote_average": 7.6,
+      "id": 293660,
+      "overview": "Deadpool tells the origin story of former Special Forces operative turned mercenary Wade Wilson, who after being subjected to a rogue experiment that leaves him with accelerated healing powers, adopts the alter ego Deadpool. Armed with his new abilities and a dark, twisted sense of humor, Deadpool hunts down the man who nearly destroyed his life.",
+      "release_date": "2016-02-09",
+      "popularity": 100.293,
+      "adult": false,
+      "backdrop_path": "/en971MEXui9diirXlogOrPKmsEn.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        35
+      ],
+      "vote_count": 23921,
+      "original_language": "en",
+      "original_title": "Deadpool",
+      "title": "Deadpool",
+      "poster_path": "/yGSxMiF0cYuAiyuve5DA6bnWEOI.jpg",
+      "video": false
+    },
+    {
+      "vote_average": 4.4,
+      "id": 166424,
+      "vote_count": 4534,
+      "release_date": "2015-08-05",
+      "popularity": 30.068,
+      "adult": false,
+      "backdrop_path": "/qUFVJZjK5KMM6m9jb8lLoORjd0r.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        878
+      ],
+      "poster_path": "/oeMpEsjmiT9PEJbRM1Fm7TZ1dE0.jpg",
+      "original_language": "en",
+      "original_title": "Fantastic Four",
+      "title": "Fantastic Four",
+      "overview": "Four young outsiders teleport to a dangerous universe, which alters their physical form in shocking ways. Their lives irrevocably upended, the team must learn to harness their daunting new abilities and work together to save Earth from a former friend turned enemy.",
+      "video": false
+    }
+  ],
+  "item_count": 49,
+  "iso_639_1": "en",
+  "name": "The Marvel Universe",
+  "poster_path": "/coJVIUEOToAEGViuhclM7pXC75R.jpg"
+}
