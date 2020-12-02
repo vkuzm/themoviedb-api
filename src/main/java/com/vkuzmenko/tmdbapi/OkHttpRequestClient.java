@@ -26,20 +26,6 @@ public class OkHttpRequestClient implements RequestClient {
     this.configuration = configuration;
   }
 
-/*  @Override
-  public Response execute(ApiUrl apiUrl, Method method) {
-    setUpRequestClient(apiUrl);
-
-    switch (method) {
-      case GET:
-        return getRequest(apiUrl);
-      case POST:
-        return postRequest(apiUrl, null);
-      default:
-        throw new InvalidRequestMethodException("Request method type is invalid");
-    }
-  }*/
-
   @Override
   public Response get(ApiUrl apiUrl) {
     setUpRequestClient(apiUrl);
@@ -69,25 +55,6 @@ public class OkHttpRequestClient implements RequestClient {
     apiUrl.addQueryParam(BaseQueryParam.API_KEY, configuration.getApiKey());
   }
 
-/*  private Response getRequest(ApiUrl apiUrl) {
-    final Request request = new Request.Builder()
-        .url(apiUrl.getUrl())
-        .build();
-
-    return makeRequest(request);
-  }
-
-  private Response postRequest(ApiUrl apiUrl, Object object) {
-    final RequestBody requestBody = getRequestBody(object);
-
-    final Request request = new Request.Builder()
-        .post(requestBody)
-        .url(apiUrl.getUrl())
-        .build();
-
-    return makeRequest(request);
-  }*/
-
   private Response makeRequest(Request request) {
     try {
       OkHttpClient client = okHttpClientFactory.createOkHttpClient();
@@ -95,8 +62,8 @@ public class OkHttpRequestClient implements RequestClient {
 
       return new Response(response.body().string(), response.headers());
     } catch (IOException e) {
-      throw new TmdbApiRequestException(
-          "IO exception has been occurred while making HTTP request to the API");
+      throw new TmdbApiRequestException("IO exception has been occurred "
+          + "while making HTTP request to the API: " + e.getMessage());
     }
   }
 
