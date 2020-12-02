@@ -35,11 +35,12 @@ public class Response {
   }
 
   public <T> T object(Class<T> mapToClass) {
+    T object = null;
     try {
-      return new ObjectMapper().readValue(responseBody, mapToClass);
+      object = new ObjectMapper().readValue(responseBody, mapToClass);
     } catch (JsonProcessingException e) {
-      // TODO ADD LOGS
+      // TODO LOGGING
     }
-    return null;
+    return object;
   }
 }
