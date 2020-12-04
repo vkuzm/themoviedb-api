@@ -2,18 +2,20 @@ package com.vkuzmenko.tmdbapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.vkuzmenko.tmdbapi.enums.BaseQueryParam;
 import com.vkuzmenko.tmdbapi.enums.ListPathVariable;
+import com.vkuzmenko.tmdbapi.enums.ListQueryParam;
 import com.vkuzmenko.tmdbapi.enums.QueryParam;
+import com.vkuzmenko.tmdbapi.models.CheckItemStatus;
 import com.vkuzmenko.tmdbapi.models.Movie;
 import com.vkuzmenko.tmdbapi.models.MovieList;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -24,6 +26,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TmdbListTest {
+
+  private static final String API_KEY = "4324324324";
 
   private final String listId = "1";
 
@@ -42,6 +46,8 @@ public class TmdbListTest {
   private final String movie2Title = "Spider-Man: Homecoming";
   private final String movie2Overview = "Following the events of Captain America: Civil War, Peter Parker, with the help of his mentor Tony Stark, tries to balance his life as an ordinary high school student in Queens, New York City, with fighting crime as his superhero alter ego Spider-Man as a new threat, the Vulture, emerges.";
 
+  private static ApiConfiguration configuration;
+
   @Mock
   private RequestClient requestClient;
 
@@ -53,6 +59,13 @@ public class TmdbListTest {
 
   @Captor
   private ArgumentCaptor<ApiUrl> apiUrlCaptor;
+
+  @BeforeClass
+  public static void setUpClass() {
+    configuration = new ApiConfiguration();
+    configuration.setApiVersion(Constants.API_VERSION);
+    configuration.setApiKey(API_KEY);
+  }
 
   @Before
   public void setUp() {
@@ -108,14 +121,13 @@ public class TmdbListTest {
   public void getListWithNoQueryParams() {
     tmdbList.getMovieList(listId);
 
-    ApiUrl apiUrl = new ApiUrl();
+    ApiUrl apiUrl = new ApiUrl(configuration);
     apiUrl.addPathVariable(ListPathVariable.LIST, listId);
 
-    verify(requestClient)
-        .get(apiUrlCaptor.capture());
+    verify(requestClient).get(apiUrlCaptor.capture());
 
-    String generatedUrl = apiUrlCaptor.getValue().getUrl();
-    assertThat(generatedUrl).isEqualTo(apiUrl.getUrl());
+    String generatedUrl = apiUrlCaptor.getValue().build();
+    assertThat(generatedUrl).isEqualTo(apiUrl.build());
   }
 
   @Test
@@ -126,14 +138,44 @@ public class TmdbListTest {
 
     tmdbList.getMovieList(listId, queryParams);
 
-    ApiUrl apiUrl = new ApiUrl();
+    ApiUrl apiUrl = new ApiUrl(configuration);
     apiUrl.addPathVariable(ListPathVariable.LIST, listId);
     apiUrl.addQueryParam(BaseQueryParam.LANGUAGE, "en");
     apiUrl.addQueryParam(BaseQueryParam.PAGE, "1");
 
     verify(requestClient).get(apiUrlCaptor.capture());
 
-    String generatedUrl = apiUrlCaptor.getValue().getUrl();
-    assertThat(generatedUrl).isEqualTo(apiUrl.getUrl());
+    String generatedUrl = apiUrlCaptor.getValue().build();
+    assertThat(generatedUrl).isEqualTo(apiUrl.build());
+  }
+
+  @Test
+  public void checkItemStatus() {
+    final String itemId = "54535345";
+
+    CheckItemStatus checkItemStatus = new CheckItemStatus();
+    checkItemStatus.setItemPresent(true);
+
+    when(response.object(CheckItemStatus.class))
+        .thenReturn(checkItemStatus);
+
+    CheckItemStatus checkItemStatusResult = tmdbList.checkItemStatus(listId, itemId);
+    assertThat(checkItemStatusResult.isItemPresent()).isTrue();
+  }
+
+  @Test
+  public void checkItemStatusListWithNoQueryParams() {
+    final String itemId = "54535345";
+    tmdbList.checkItemStatus(listId, itemId);
+
+    ApiUrl apiUrl = new ApiUrl(configuration);
+    apiUrl.addPathVariable(ListPathVariable.LIST, listId);
+    apiUrl.addPathName(ListPathVariable.ITEM_STATUS);
+    apiUrl.addQueryParam(ListQueryParam.MOVIE_ID, itemId);
+
+    verify(requestClient).get(apiUrlCaptor.capture());
+
+    String generatedUrl = apiUrlCaptor.getValue().build();
+    assertThat(generatedUrl).isEqualTo(apiUrl.build());
   }
 }

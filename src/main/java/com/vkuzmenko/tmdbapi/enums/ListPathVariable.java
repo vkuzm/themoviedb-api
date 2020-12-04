@@ -1,7 +1,8 @@
 package com.vkuzmenko.tmdbapi.enums;
 
 public enum ListPathVariable implements PathVariable {
-  LIST("list");
+  LIST("list"),
+  ITEM_STATUS("item_status");
 
   private final String pathName;
 

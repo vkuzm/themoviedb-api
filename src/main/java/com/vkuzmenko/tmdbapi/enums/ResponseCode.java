@@ -1,6 +1,6 @@
 package com.vkuzmenko.tmdbapi.enums;
 
-public enum ResponseStatus {
+public enum ResponseCode {
   OK(200),
   CREATED(201),
   NOT_CONTENT(204),
@@ -15,7 +15,7 @@ public enum ResponseStatus {
 
   private final int statusCode;
 
-  ResponseStatus(int statusCode) {
+  ResponseCode(int statusCode) {
     this.statusCode = statusCode;
   }
 

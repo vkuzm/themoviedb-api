@@ -4,6 +4,7 @@ public class TmdbApi {
 
   private final String apiKey;
   private RequestClient requestClient;
+  private ApiConfiguration configuration;
 
   /**
    * A constructor that contains a default implementation of a request client.
@@ -12,7 +13,8 @@ public class TmdbApi {
    */
   public TmdbApi(String apiKey) {
     this.apiKey = apiKey;
-    this.setRequestClient(new OkHttpRequestClient());
+    this.requestClient = new OkHttpRequestClient();
+    this.setUpConfiguration();
   }
 
   /**
@@ -23,7 +25,6 @@ public class TmdbApi {
    */
   public void setRequestClient(RequestClient requestClient) {
     this.requestClient = requestClient;
-    this.requestClient.addConfiguration(getConfiguration());
   }
 
   /**
@@ -32,13 +33,20 @@ public class TmdbApi {
    * @return a entity list that contains all movies data.
    */
   public TmdbList getList() {
-    return new TmdbList(requestClient);
+    return new TmdbList(this);
   }
 
-  private ApiConfiguration getConfiguration() {
-    final ApiConfiguration configuration = new ApiConfiguration();
-    configuration.setApiKey(apiKey);
-    configuration.setApiVersion(Constants.API_VERSION);
-    return configuration;
+  public RequestClient getRequestClient() {
+    return this.requestClient;
+  }
+
+  public ApiConfiguration getConfiguration() {
+    return this.configuration;
+  }
+
+  private void setUpConfiguration() {
+    this.configuration = new ApiConfiguration();
+    this.configuration.setApiKey(apiKey);
+    this.configuration.setApiVersion(Constants.API_VERSION);
   }
 }

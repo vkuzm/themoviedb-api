@@ -1,8 +1,6 @@
 package com.vkuzmenko.tmdbapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,27 +22,12 @@ public class TmdbApiTest {
 
   @Before
   public void setUp() {
+    tmdbApi = new TmdbApi(API_KEY);
     tmdbApi.setRequestClient(requestClient);
-  }
-
-  @Test
-  public void generateConfigurationForRequestClientCorrectly() {
-    TmdbApi tmdbApi = new TmdbApi(API_KEY);
-    tmdbApi.setRequestClient(requestClient);
-
-    ApiConfiguration configuration = new ApiConfiguration();
-    configuration.setApiKey(API_KEY);
-    configuration.setApiVersion(Constants.API_VERSION);
-
-    verify(requestClient, times(1))
-        .addConfiguration(configuration);
   }
 
   @Test
   public void getListInstanceCorrectly() {
-    TmdbApi tmdbApi = new TmdbApi(API_KEY);
-    tmdbApi.setRequestClient(requestClient);
-
     TmdbList tmdbList = tmdbApi.getList();
     assertThat(tmdbList).isInstanceOf(TmdbList.class);
   }

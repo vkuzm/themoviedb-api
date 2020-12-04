@@ -1,7 +1,7 @@
 package com.vkuzmenko.tmdbapi.enums;
 
 public enum ListQueryParam implements QueryParam {
-  PAGE("page");
+  MOVIE_ID("movie_id");
 
   private final String paramName;
 

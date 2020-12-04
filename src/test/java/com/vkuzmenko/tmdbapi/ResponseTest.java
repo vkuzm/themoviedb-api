@@ -2,9 +2,12 @@ package com.vkuzmenko.tmdbapi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.vkuzmenko.tmdbapi.exceptions.ResponseStatusException;
 import com.vkuzmenko.tmdbapi.models.MovieList;
 import com.vkuzmenko.tmdbapi.utils.JsonPlaceholderReader;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ResponseTest {
 
@@ -27,7 +30,7 @@ public class ResponseTest {
 
   @Test
   public void toObjectAndResponseBodyIsNotEmptyThanReturnMappedObject() {
-    Response response = new Response(json, null);
+    Response response = new Response(json);
     MovieList movieList = response.object(MovieList.class);
 
     assertThat(movieList.getId()).isEqualTo(id);
@@ -48,7 +51,7 @@ public class ResponseTest {
 
   @Test
   public void toObjectAndResponseBodyIsEmptyThenMappedObjectReturnsAsNull() {
-    Response response = new Response("", null);
+    Response response = new Response("");
     MovieList movieList = response.object(MovieList.class);
 
     assertThat(movieList).isNull();
@@ -56,13 +59,13 @@ public class ResponseTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void toObjectAndResponseBodyIsNullThenThrownIllegalArgumentException() {
-    Response response = new Response(null, null);
+    Response response = new Response(null);
     response.object(MovieList.class);
   }
 
   @Test
   public void toJsonAndResponseBodyIsNotEmptyThanReturnRawJson() {
-    Response response = new Response(json, null);
+    Response response = new Response(json);
     String movieListJson = response.json();
 
     assertThat(movieListJson).contains(json);
@@ -70,17 +73,23 @@ public class ResponseTest {
 
   @Test
   public void toJsonAndResponseBodyIsEmptyThanReturnEmptyString() {
-    Response response = new Response("", null);
+    Response response = new Response("");
     String movieListJson = response.json();
 
     assertThat(movieListJson).isEqualTo("");
   }
 
-  @Test
-  public void toJsonAndResponseBodyIsNullThanReturnEmptyString() {
-    Response response = new Response(null, null);
-    String movieListJson = response.json();
+  @Rule
+  public ExpectedException expectedEx = ExpectedException.none();
 
-    assertThat(movieListJson).isEqualTo("");
+  @Test
+  public void executeGetMethodAndResponseStatusErrorThenThrowsResponseStatusExceptionWithMessage() {
+    final String exceptionMessage = "Response status error: 34 - The resource you requested could not be found.";
+    final String responseBody = "{\"success\":false,\"status_code\":34,\"status_message\":\"The resource you requested could not be found.\"}";
+
+    expectedEx.expect(ResponseStatusException.class);
+    expectedEx.expectMessage(exceptionMessage);
+
+    new Response(responseBody).object(Object.class);
   }
 }
