@@ -6,7 +6,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.vkuzmenko.tmdbapi.exceptions.ApiRequestException;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class OkHttpRequestClient implements RequestClient {
 
   private OkHttpClientFactory okHttpClientFactory;
@@ -40,13 +42,24 @@ public class OkHttpRequestClient implements RequestClient {
   }
 
   private Response makeRequest(Request request) {
+    log.debug("Making HTTP " + request.method() + " request to the API:" +
+        "\nHeaders: " + request.headers().toString() +
+        "\nBody: " + request.body());
+
     try {
       final com.squareup.okhttp.Response response = getResponse(request);
-      return new Response(response.message(), response.headers(), response.code());
+
+      log.debug("Getting HTTP response from the API:" +
+          "\nHeaders: " + response.headers().toString() +
+          "\nResponse Code: " + response.code() +
+          "\nBody: " + response.body());
+
+      return new Response(response.body().string(), response.headers(), response.code());
 
     } catch (IOException e) {
-      throw new ApiRequestException("IO exception has been occurred "
-          + "while making HTTP request to the API: " + e.getMessage());
+      String message = "IO exception has been occurred while making HTTP request to the API: " + e.getMessage();
+      log.error(message, e);
+      throw new ApiRequestException(message);
     }
   }
 

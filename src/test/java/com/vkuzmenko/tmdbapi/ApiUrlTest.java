@@ -44,9 +44,8 @@ public class ApiUrlTest {
     apiUrl.addPathVariable(ListPathVariable.ITEM_STATUS, itemStatus);
 
     String uri = apiUrl.build();
-    String fullUrl = getListUrl(listId)
+    String fullUrl = getListUrl(listId) + Constants.SLASH
         + ListPathVariable.ITEM_STATUS.getPathName() + Constants.SLASH + itemStatus
-        + Constants.SLASH
         + getApiKey();
 
     assertThat(uri).isEqualTo(fullUrl);
@@ -103,8 +102,8 @@ public class ApiUrlTest {
 
     String uri = apiUrl.build();
     String fullUrl = getListUrl(listId) + getApiKey()
-        + Constants.AMP + BaseQueryParam.PAGE.getParamName() + Constants.EQUAL + pageNumber
-        + Constants.AMP + BaseQueryParam.LANGUAGE.getParamName() + Constants.EQUAL + language;
+        + Constants.AMP + BaseQueryParam.LANGUAGE.getParamName() + Constants.EQUAL + language
+        + Constants.AMP + BaseQueryParam.PAGE.getParamName() + Constants.EQUAL + pageNumber;
 
     assertThat(uri).isEqualTo(fullUrl);
   }
@@ -142,7 +141,7 @@ public class ApiUrlTest {
   }
 
   @Test
-  public void pathNameTest() {
+  public void apiUrlWithAddingPathNameTest() {
     final String listId = "1";
 
     ApiUrl apiUrl = new ApiUrl(configuration);
@@ -150,8 +149,8 @@ public class ApiUrlTest {
     apiUrl.addPathName(ListPathVariable.ITEM_STATUS);
 
     String uri = apiUrl.build();
-    String fullUrl = getListUrl(listId)
-        + ListPathVariable.ITEM_STATUS.getPathName() + Constants.SLASH
+    String fullUrl = getListUrl(listId) + Constants.SLASH
+        + ListPathVariable.ITEM_STATUS.getPathName()
         + getApiKey();
 
     assertThat(uri).isEqualTo(fullUrl);
@@ -167,8 +166,7 @@ public class ApiUrlTest {
     return getFullUrl()
         + Constants.API_LIST
         + Constants.SLASH
-        + listId
-        + Constants.SLASH;
+        + listId;
   }
 
   private String getApiKey() {

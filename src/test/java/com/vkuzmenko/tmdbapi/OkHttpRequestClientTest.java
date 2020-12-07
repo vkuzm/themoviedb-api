@@ -77,29 +77,10 @@ public class OkHttpRequestClientTest {
     assertThat(response.json()).isEqualTo(responseBody);
   }
 
-/*  @Rule
-  public ExpectedException expectedEx = ExpectedException.none();
-
-  @Test
-  public void executeGetMethodAndResponseStatusErrorThenThrowsResponseStatusExceptionWithMessage()
-      throws IOException {
-    final String exceptionMessage = "Response status error: 34 - The resource you requested could not be found.";
-    final String responseBody = "{\"success\":false,\"status_code\":34,\"status_message\":\"The resource you requested could not be found.\"}";
-
-    expectedEx.expect(ResponseStatusException.class);
-    expectedEx.expectMessage(exceptionMessage);
-
-    OkHttpClient okHttpClient = mockHttpClient(responseBody, 404);
-    doReturn(okHttpClient)
-        .when(okHttpClientFactory).createOkHttpClient();
-
-    requestClient.get(new ApiUrl());
-  }*/
-
   @Test
   public void executeGetMethodThenMakesRequestToURL() throws IOException {
     final String REQUEST_URL = Constants.BASE_URL
-        + Constants.API_VERSION + Constants.SLASH
+        + Constants.API_VERSION
         + Constants.QMARK + BaseQueryParam.API_KEY.getParamName() + Constants.EQUAL + TestConstants.API_KEY;
 
     final OkHttpClient okHttpClient = mockHttpClient("", 200);

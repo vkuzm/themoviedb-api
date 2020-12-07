@@ -2,7 +2,9 @@ package com.vkuzmenko.tmdbapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public final class JsonConverter {
 
   private JsonConverter() {
@@ -12,7 +14,7 @@ public final class JsonConverter {
     try {
       return new ObjectMapper().writeValueAsString(object);
     } catch (JsonProcessingException e) {
-      // TODO LOGGING
+      log.error("JsonProcessingException has been occurred while converting Java Object to JSON", e);
     }
     return Constants.EMPTY_STRING;
   }

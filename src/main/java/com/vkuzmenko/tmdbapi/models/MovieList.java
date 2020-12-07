@@ -21,7 +21,7 @@ public class MovieList {
   private String id;
 
   @JsonProperty("items")
-  private List<Movie> items = new ArrayList<>();
+  private List<MovieListItem> items = new ArrayList<>();
 
   @JsonProperty("item_count")
   private int itemCount;

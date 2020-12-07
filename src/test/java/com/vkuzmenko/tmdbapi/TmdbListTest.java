@@ -10,7 +10,7 @@ import com.vkuzmenko.tmdbapi.enums.ListPathVariable;
 import com.vkuzmenko.tmdbapi.enums.ListQueryParam;
 import com.vkuzmenko.tmdbapi.enums.QueryParam;
 import com.vkuzmenko.tmdbapi.models.CheckItemStatus;
-import com.vkuzmenko.tmdbapi.models.Movie;
+import com.vkuzmenko.tmdbapi.models.MovieListItem;
 import com.vkuzmenko.tmdbapi.models.MovieList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,14 +20,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TmdbListTest {
-
-  private static final String API_KEY = "4324324324";
 
   private final String listId = "1";
 
@@ -47,6 +44,10 @@ public class TmdbListTest {
   private final String movie2Overview = "Following the events of Captain America: Civil War, Peter Parker, with the help of his mentor Tony Stark, tries to balance his life as an ordinary high school student in Queens, New York City, with fighting crime as his superhero alter ego Spider-Man as a new threat, the Vulture, emerges.";
 
   private static ApiConfiguration configuration;
+  private TmdbList tmdbList;
+
+  @Mock
+  private TmdbApi tmdbApi;
 
   @Mock
   private RequestClient requestClient;
@@ -54,21 +55,23 @@ public class TmdbListTest {
   @Mock
   private Response response;
 
-  @InjectMocks
-  private TmdbList tmdbList;
-
   @Captor
   private ArgumentCaptor<ApiUrl> apiUrlCaptor;
 
   @BeforeClass
-  public static void setUpClass() {
+  public static void setUpOnce() {
     configuration = new ApiConfiguration();
     configuration.setApiVersion(Constants.API_VERSION);
-    configuration.setApiKey(API_KEY);
+    configuration.setApiKey(TestConstants.API_KEY);
   }
 
   @Before
   public void setUp() {
+    when(tmdbApi.getConfiguration()).thenReturn(configuration);
+    when(tmdbApi.getRequestClient()).thenReturn(requestClient);
+
+    tmdbList = new TmdbList(tmdbApi);
+
     when(requestClient.get(any(ApiUrl.class)))
         .thenReturn(response);
   }
@@ -83,12 +86,12 @@ public class TmdbListTest {
     movieList.setItemCount(itemCount);
     movieList.setPosterPath(posterPath);
 
-    Movie movie = new Movie();
+    MovieListItem movie = new MovieListItem();
     movie.setId(movie1Id);
     movie.setTitle(movie1Title);
     movie.setOverview(movie1Overview);
 
-    Movie movie2 = new Movie();
+    MovieListItem movie2 = new MovieListItem();
     movie2.setId(movie2Id);
     movie2.setTitle(movie2Title);
     movie2.setOverview(movie2Overview);

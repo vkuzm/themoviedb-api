@@ -84,12 +84,14 @@ public class ResponseTest {
 
   @Test
   public void executeGetMethodAndResponseStatusErrorThenThrowsResponseStatusExceptionWithMessage() {
-    final String exceptionMessage = "Response status error: 34 - The resource you requested could not be found.";
-    final String responseBody = "{\"success\":false,\"status_code\":34,\"status_message\":\"The resource you requested could not be found.\"}";
+    final String exceptionMessage = TestConstants.API_ERROR_NOT_FOUND;
+    final String responseBody = "{\"success\":false,\"status_code\":34,\"status_message\":"
+        + "\"The resource you requested could not be found.\"}";
 
     expectedEx.expect(ResponseStatusException.class);
     expectedEx.expectMessage(exceptionMessage);
 
-    new Response(responseBody).object(Object.class);
+    final Response response = new Response(responseBody, null, 404);
+    response.object(Object.class);
   }
 }

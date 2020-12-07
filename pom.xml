@@ -17,6 +17,10 @@
     <mockito-all.version>1.10.19</mockito-all.version>
     <junit.version>4.13.1</junit.version>
     <lombok.version>1.18.16</lombok.version>
+    <slf4j-api.version>1.7.30</slf4j-api.version>
+    <log4j-core.version>2.14.0</log4j-core.version>
+    <log4j-api.version>2.14.0</log4j-api.version>
+    <log4j-slf4j-impl.version>2.14.0</log4j-slf4j-impl.version>
   </properties>
 
   <dependencies>
@@ -53,6 +57,27 @@
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>${log4j-slf4j-impl.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

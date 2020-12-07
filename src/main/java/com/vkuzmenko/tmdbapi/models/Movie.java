@@ -1,55 +1,85 @@
 package com.vkuzmenko.tmdbapi.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 
 @Data
 public class Movie {
 
-  @JsonProperty("vote_average")
-  private double voteAverage;
-
   @JsonProperty("id")
-  private long id;
-
-  @JsonProperty("overview")
-  private String overview;
-
-  @JsonProperty("release_date")
-  private Date releaseDate;
-
-  @JsonProperty("popularity")
-  private double popularity;
+  public int id;
 
   @JsonProperty("adult")
-  private boolean adult;
+  public boolean adult;
 
   @JsonProperty("backdrop_path")
-  private String backdropPath;
+  public String backdropPath;
 
-  @JsonProperty("media_type")
-  private String mediaType;
+  @JsonProperty("belongs_to_collection")
+  public BelongsToCollection belongsToCollection;
 
-  @JsonProperty("genre_ids")
-  private List<Integer> genreIds;
+  @JsonProperty("budget")
+  public int budget;
 
-  @JsonProperty("vote_count")
-  private int voteCount;
+  @JsonProperty("genres")
+  public List<Genre> genres = new ArrayList<>();
+
+  @JsonProperty("homepage")
+  public String homepage;
+
+  @JsonProperty("imdb_id")
+  public String imdbId;
 
   @JsonProperty("original_language")
-  private String originalLanguage;
+  public String originalLanguage;
 
   @JsonProperty("original_title")
-  private String originalTitle;
+  public String originalTitle;
+
+  @JsonProperty("overview")
+  public String overview;
+
+  @JsonProperty("popularity")
+  public double popularity;
 
   @JsonProperty("poster_path")
-  private String posterPath;
+  public String posterPath;
+
+  @JsonProperty("production_companies")
+  public List<ProductionCompany> productionCompanies = new ArrayList<>();
+
+  @JsonProperty("production_countries")
+  public List<ProductionCountry> productionCountries = new ArrayList<>();
+
+  @JsonProperty("release_date")
+  public String releaseDate;
+
+  @JsonProperty("revenue")
+  public int revenue;
+
+  @JsonProperty("runtime")
+  public int runtime;
+
+  @JsonProperty("spoken_languages")
+  public List<SpokenLanguage> spokenLanguages;
+
+  @JsonProperty("status")
+  public String status;
+
+  @JsonProperty("tagline")
+  public String tagLine;
 
   @JsonProperty("title")
-  private String title;
+  public String title;
 
   @JsonProperty("video")
-  private boolean video;
+  public boolean video;
+
+  @JsonProperty("vote_average")
+  public double voteAverage;
+
+  @JsonProperty("vote_count")
+  public int voteCount;
 }

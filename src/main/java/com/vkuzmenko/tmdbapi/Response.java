@@ -1,6 +1,8 @@
 package com.vkuzmenko.tmdbapi;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Headers;
 import com.vkuzmenko.tmdbapi.exceptions.ResponseStatusException;
@@ -9,7 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Response {
 
   private static final List<Integer> SUCCESS_STATUS_CODES = Arrays.asList(
@@ -59,7 +63,9 @@ public class Response {
       final int statusCode = responseStatus.getStatusCode();
       final String statusMessage = responseStatus.getStatusMessage();
       if (hasErrorStatusCode(statusCode)) {
-        throw new ResponseStatusException("Response status error: " + statusCode + " - " + statusMessage);
+        String message = "Response status error: " + statusCode + " - " + statusMessage;
+        log.error(message);
+        throw new ResponseStatusException(message);
       }
     }
 
@@ -69,15 +75,20 @@ public class Response {
   private <T> T mapJsonResult(Class<T> mapToClass) {
     T object = null;
     try {
-      object = new ObjectMapper().readValue(responseBody, mapToClass);
+      final ObjectMapper mapper = new ObjectMapper();
+      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      object = mapper.readValue(responseBody, mapToClass);
+
     } catch (JsonProcessingException e) {
-      // TODO LOGGING
+      log.error("JsonProcessingException has been occurred while converting JSON to Java Object", e);
     }
     return object;
   }
 
   private ResponseStatus getResponseStatus() {
-    return mapJsonResult(ResponseStatus.class);
+    return this.responseCode >= 400
+        ? mapJsonResult(ResponseStatus.class)
+        : null;
   }
 
   private boolean hasErrorStatusCode(int statusCode) {
