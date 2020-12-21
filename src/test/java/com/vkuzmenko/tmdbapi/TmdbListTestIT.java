@@ -7,13 +7,16 @@ import com.vkuzmenko.tmdbapi.enums.BaseQueryParam;
 import com.vkuzmenko.tmdbapi.enums.QueryParam;
 import com.vkuzmenko.tmdbapi.exceptions.ResponseStatusException;
 import com.vkuzmenko.tmdbapi.models.CheckItemStatus;
+import com.vkuzmenko.tmdbapi.models.CreateList;
+import com.vkuzmenko.tmdbapi.models.CreateListResponse;
 import com.vkuzmenko.tmdbapi.models.MovieList;
+import com.vkuzmenko.tmdbapi.models.MovieRequest;
+import com.vkuzmenko.tmdbapi.models.ResponseStatus;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
-import org.junit.Rule;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class TmdbListTestIT {
 
@@ -100,18 +103,63 @@ public class TmdbListTestIT {
     assertThat(checkItemStatusResult.isItemPresent()).isFalse();
   }
 
-/*  @Rule
-  public ExpectedException expectedEx = ExpectedException.none();
+  @Test
+  @Ignore
+  public void shouldCreateNewListAndReturnResponseObject() {
+    //AuthenticationSession session = tmdbApi.getSession();
+    String sessionId = "f40e9ce67fb974c7dcc6f6f4748c1b1ec01c3f81";
+
+    CreateList list = new CreateList();
+    list.setName("my list title");
+    list.setDescription("my list description");
+    list.setLanguage("es");
+
+    CreateListResponse response = tmdbList.createList(list, sessionId);
+
+    assertThat(response.isSuccess()).isTrue();
+    assertThat(response.getStatusCode()).isEqualTo(1);
+  }
 
   @Test
-  public void checkItemStatusAndMovieNotExistedThenThrowsResponseStatusExceptionWithMessage() {
-    final String exceptionMessage = TestConstants.API_ERROR_NOT_FOUND;
-    final String listId = "1";
-    final String itemId = "5453534542342";
+  @Ignore
+  public void shouldAddNewMovieInListAndReturnResponseObject() {
+    //AuthenticationSession session = tmdbApi.getSession();
+    String sessionId = "f40e9ce67fb974c7dcc6f6f4748c1b1ec01c3f81";
+    String listId = "7067894";
 
-    expectedEx.expect(ResponseStatusException.class);
-    expectedEx.expectMessage(exceptionMessage);
+    MovieRequest movie = new MovieRequest();
+    movie.setMediaId(19);
 
-    tmdbList.checkItemStatus(listId, itemId);
-  }*/
+    ResponseStatus response = tmdbList.createMovie(movie, listId, sessionId);
+
+    assertThat(response.isSuccess()).isTrue();
+    assertThat(response.getStatusCode()).isEqualTo(12);
+  }
+
+  @Test
+  @Ignore
+  public void shouldRemoveNewMovieFromListAndReturnResponseObject() {
+    //AuthenticationSession session = tmdbApi.getSession();
+    String sessionId = "f40e9ce67fb974c7dcc6f6f4748c1b1ec01c3f81";
+    String listId = "7067894";
+
+    MovieRequest movie = new MovieRequest();
+    movie.setMediaId(19);
+
+    ResponseStatus response = tmdbList.removeMovie(movie, listId, sessionId);
+
+    assertThat(response.getStatusCode()).isEqualTo(13);
+  }
+
+  @Test
+  @Ignore
+  public void shouldRemoveListAndReturnResponseObject() {
+    //AuthenticationSession session = tmdbApi.getSession();
+    String sessionId = "f40e9ce67fb974c7dcc6f6f4748c1b1ec01c3f81";
+    String listId = "7067894";
+
+    ResponseStatus response = tmdbList.removeList(listId, sessionId);
+
+    assertThat(response.getStatusCode()).isEqualTo(12);
+  }
 }

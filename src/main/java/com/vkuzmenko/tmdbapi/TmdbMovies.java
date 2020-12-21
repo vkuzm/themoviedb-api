@@ -1,8 +1,12 @@
 package com.vkuzmenko.tmdbapi;
 
+import com.vkuzmenko.tmdbapi.enums.BaseQueryParam;
+import com.vkuzmenko.tmdbapi.enums.ListPathVariable;
 import com.vkuzmenko.tmdbapi.enums.MoviePathVariable;
 import com.vkuzmenko.tmdbapi.enums.QueryParam;
+import com.vkuzmenko.tmdbapi.models.MovieRequest;
 import com.vkuzmenko.tmdbapi.models.Movie;
+import com.vkuzmenko.tmdbapi.models.ResponseStatus;
 import java.util.Map;
 
 public class TmdbMovies {

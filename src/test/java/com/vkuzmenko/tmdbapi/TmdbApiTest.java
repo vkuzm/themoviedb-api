@@ -29,4 +29,10 @@ public class TmdbApiTest {
     TmdbList tmdbList = tmdbApi.getList();
     assertThat(tmdbList).isInstanceOf(TmdbList.class);
   }
+
+  @Test
+  public void getAuthenticationInstanceCorrectly() {
+    TmdbAuthentication authentication = tmdbApi.authentication();
+    assertThat(authentication).isInstanceOf(TmdbAuthentication.class);
+  }
 }

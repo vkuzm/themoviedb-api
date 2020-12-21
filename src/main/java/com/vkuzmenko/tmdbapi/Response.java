@@ -1,8 +1,6 @@
 package com.vkuzmenko.tmdbapi;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Headers;
 import com.vkuzmenko.tmdbapi.exceptions.ResponseStatusException;
@@ -76,7 +74,7 @@ public class Response {
     T object = null;
     try {
       final ObjectMapper mapper = new ObjectMapper();
-      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+      //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
       object = mapper.readValue(responseBody, mapToClass);
 
     } catch (JsonProcessingException e) {
@@ -86,10 +84,16 @@ public class Response {
   }
 
   private ResponseStatus getResponseStatus() {
-    return this.responseCode >= 400
+    return this.responseCode >= 300
         ? mapJsonResult(ResponseStatus.class)
         : null;
   }
+
+/*  private ResponseStatus getResponseStatus() {
+    return this.responseCode >= 400
+        ? mapJsonResult(ResponseStatus.class)
+        : null;
+  }*/
 
   private boolean hasErrorStatusCode(int statusCode) {
     return !SUCCESS_STATUS_CODES.contains(statusCode);

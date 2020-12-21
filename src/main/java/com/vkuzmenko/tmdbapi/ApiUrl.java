@@ -14,11 +14,16 @@ public class ApiUrl {
 
   private final Map<String, String> pathVariables = new LinkedHashMap<>();
   private final Map<String, String> queryParams = new LinkedHashMap<>();
-  private final StringBuilder urlBuilder = new StringBuilder(Constants.BASE_URL);
+  private final StringBuilder urlBuilder = new StringBuilder();
 
   public ApiUrl(ApiConfiguration configuration) {
+    appendUrl(Constants.BASE_URL);
     addApiVersion(configuration);
     addApiKey(configuration);
+  }
+
+  public ApiUrl(String customUrl) {
+    appendUrl(customUrl);
   }
 
   /**
@@ -70,46 +75,54 @@ public class ApiUrl {
     buildPathVariables();
     buildQueryParams();
 
-    log.debug("The finale API URL has been build: " + urlBuilder.toString());
+    log.debug("The final API URL has been built: " + urlBuilder.toString());
     return urlBuilder.toString();
   }
 
   private void buildPathVariables() {
-    pathVariables.forEach((name, value) -> {
-      // Check if there's not value in a path variable than add only it's name to the URL.
-      if (value.isEmpty()) {
-        urlBuilder.append(Constants.SLASH)
-            .append(name);
+    if (!pathVariables.isEmpty()) {
+      pathVariables.forEach((name, value) -> {
+        // Check if there's not value in a path variable than add only it's name to the URL.
+        if (value.isEmpty()) {
+          appendUrl(Constants.SLASH);
+          appendUrl(name);
 
-        // Otherwise it's a path variable with a value. In this case add that value to the URL.
-      } else {
-        urlBuilder.append(Constants.SLASH)
-            .append(name)
-            .append(Constants.SLASH)
-            .append(value);
-      }
-    });
+          // Otherwise it's a path variable with a value. In this case add that value to the URL.
+        } else {
+          appendUrl(Constants.SLASH);
+          appendUrl(name);
+          appendUrl(Constants.SLASH);
+          appendUrl(value);
+        }
+      });
+    }
   }
 
   private void buildQueryParams() {
-    final List<String> keys = new ArrayList<>(queryParams.keySet());
+    if (!queryParams.isEmpty()) {
+      final List<String> keys = new ArrayList<>(queryParams.keySet());
 
-    for (int i = 0; i < keys.size(); i++) {
-      String name = keys.get(i);
-      String value = queryParams.get(name);
+      for (int i = 0; i < keys.size(); i++) {
+        String name = keys.get(i);
+        String value = queryParams.get(name);
 
-      urlBuilder.append(i == 0 ? Constants.QMARK : Constants.AMP);
-      urlBuilder.append(name)
-          .append(Constants.EQUAL)
-          .append(value);
+        appendUrl(i == 0 ? Constants.QMARK : Constants.AMP);
+        appendUrl(name);
+        appendUrl(Constants.EQUAL);
+        appendUrl(value);
+      }
     }
   }
 
   private void addApiVersion(ApiConfiguration configuration) {
-    urlBuilder.append(configuration.getApiVersion());
+    appendUrl(configuration.getApiVersion());
   }
 
   private void addApiKey(ApiConfiguration configuration) {
     addQueryParam(BaseQueryParam.API_KEY, configuration.getApiKey());
+  }
+
+  private void appendUrl(String value) {
+    urlBuilder.append(value);
   }
 }

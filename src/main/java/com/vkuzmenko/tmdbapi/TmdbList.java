@@ -1,17 +1,19 @@
 package com.vkuzmenko.tmdbapi;
 
+import com.vkuzmenko.tmdbapi.enums.BaseQueryParam;
 import com.vkuzmenko.tmdbapi.enums.ListPathVariable;
 import com.vkuzmenko.tmdbapi.enums.ListQueryParam;
+import com.vkuzmenko.tmdbapi.enums.MoviePathVariable;
 import com.vkuzmenko.tmdbapi.enums.QueryParam;
 import com.vkuzmenko.tmdbapi.models.CheckItemStatus;
+import com.vkuzmenko.tmdbapi.models.CreateList;
+import com.vkuzmenko.tmdbapi.models.CreateListResponse;
 import com.vkuzmenko.tmdbapi.models.MovieList;
+import com.vkuzmenko.tmdbapi.models.MovieRequest;
+import com.vkuzmenko.tmdbapi.models.ResponseStatus;
 import java.util.Map;
 
 public class TmdbList {
-
-/*  private static final String MOVIE_ID = "movie_id";
-  private static final String LIST = "list";
-  private static final String ITEM_STATUS = "item_status";*/
 
   private final RequestClient requestClient;
   private final ApiConfiguration configuration;
@@ -44,4 +46,39 @@ public class TmdbList {
 
     return requestClient.get(apiUrl).object(CheckItemStatus.class);
   }
+
+  public CreateListResponse createList(CreateList list, String sessionId) {
+    ApiUrl apiUrl = new ApiUrl(configuration);
+    apiUrl.addPathName(ListPathVariable.LIST);
+    apiUrl.addQueryParam(BaseQueryParam.SESSION_ID, sessionId);
+
+    return requestClient.post(apiUrl, list).object(CreateListResponse.class);
+  }
+
+  public ResponseStatus removeList(String listId, String sessionId) {
+    ApiUrl apiUrl = new ApiUrl(configuration);
+    apiUrl.addPathVariable(ListPathVariable.LIST, listId);
+    apiUrl.addQueryParam(BaseQueryParam.SESSION_ID, sessionId);
+
+    return requestClient.delete(apiUrl, null).object(ResponseStatus.class);
+  }
+
+  public ResponseStatus createMovie(MovieRequest movie, String listId, String sessionId) {
+    ApiUrl apiUrl = new ApiUrl(configuration);
+    apiUrl.addPathVariable(ListPathVariable.LIST, listId);
+    apiUrl.addPathName(MoviePathVariable.ADD_ITEM);
+    apiUrl.addQueryParam(BaseQueryParam.SESSION_ID, sessionId);
+
+    return requestClient.post(apiUrl, movie).object(ResponseStatus.class);
+  }
+
+  public ResponseStatus removeMovie(MovieRequest movie, String listId, String sessionId) {
+    ApiUrl apiUrl = new ApiUrl(configuration);
+    apiUrl.addPathVariable(ListPathVariable.LIST, listId);
+    apiUrl.addPathName(MoviePathVariable.REMOVE_ITEM);
+    apiUrl.addQueryParam(BaseQueryParam.SESSION_ID, sessionId);
+
+    return requestClient.post(apiUrl, movie).object(ResponseStatus.class);
+  }
+
 }

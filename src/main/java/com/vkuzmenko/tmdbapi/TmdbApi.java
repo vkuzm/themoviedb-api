@@ -1,10 +1,14 @@
 package com.vkuzmenko.tmdbapi;
 
+import com.vkuzmenko.tmdbapi.models.AuthenticationSession;
+import com.vkuzmenko.tmdbapi.models.AuthenticationToken;
+
 public class TmdbApi {
 
   private final String apiKey;
   private RequestClient requestClient;
   private ApiConfiguration configuration;
+  private AuthenticationSession authenticationSession;
 
   /**
    * A constructor that contains a default implementation of a request client.
@@ -36,12 +40,25 @@ public class TmdbApi {
     return new TmdbList(this);
   }
 
+  public TmdbAuthentication authentication() {
+    return new TmdbAuthentication(this);
+  }
+
   public RequestClient getRequestClient() {
     return this.requestClient;
   }
 
   public ApiConfiguration getConfiguration() {
     return this.configuration;
+  }
+
+  public AuthenticationSession getSession() {
+    if (authenticationSession == null) {
+      final TmdbAuthentication authentication = authentication();
+      final AuthenticationToken token = authentication.requestToken();
+      authenticationSession = authentication.requestSession(token.getRequestToken());
+    }
+    return authenticationSession;
   }
 
   private void setUpConfiguration() {

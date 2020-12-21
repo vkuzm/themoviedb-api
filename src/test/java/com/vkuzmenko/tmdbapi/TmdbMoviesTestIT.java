@@ -6,10 +6,13 @@ import static org.junit.Assert.assertThrows;
 import com.vkuzmenko.tmdbapi.enums.BaseQueryParam;
 import com.vkuzmenko.tmdbapi.enums.QueryParam;
 import com.vkuzmenko.tmdbapi.exceptions.ResponseStatusException;
+import com.vkuzmenko.tmdbapi.models.MovieRequest;
 import com.vkuzmenko.tmdbapi.models.Movie;
+import com.vkuzmenko.tmdbapi.models.ResponseStatus;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TmdbMoviesTestIT {
@@ -61,4 +64,5 @@ public class TmdbMoviesTestIT {
     assertThat(movie.getTitle()).isEqualTo(movieTitle);
     assertThat(movie.getOverview()).isEqualTo(movieOverview);
   }
+
 }

@@ -4,7 +4,8 @@ public enum BaseQueryParam implements QueryParam {
   PAGE("page"),
   LANGUAGE("language"),
   API_KEY("api_key"),
-  APPEND_TO_RESPONSE("append_to_response");
+  APPEND_TO_RESPONSE("append_to_response"),
+  SESSION_ID("session_id");
 
   private final String paramName;
 

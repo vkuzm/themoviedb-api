@@ -9,6 +9,9 @@ public class ResponseStatus {
   @JsonProperty("success")
   private boolean success;
 
+  @JsonProperty("failure")
+  private boolean failure;
+
   @JsonProperty("status_code")
   private int statusCode;
 

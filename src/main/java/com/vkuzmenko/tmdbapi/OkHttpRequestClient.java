@@ -1,5 +1,6 @@
 package com.vkuzmenko.tmdbapi;
 
+import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -35,6 +36,18 @@ public class OkHttpRequestClient implements RequestClient {
     final RequestBody requestBody = getRequestBody(object);
     final Request request = new Request.Builder()
         .post(requestBody)
+        .header("Content-Type", "application/json;charset=utf-8")
+        .url(apiUrl.build())
+        .build();
+
+    return makeRequest(request);
+  }
+
+  @Override
+  public <T> Response delete(ApiUrl apiUrl, T object) {
+    final RequestBody requestBody = getRequestBody(object);
+    final Request request = new Request.Builder()
+        .delete(requestBody)
         .url(apiUrl.build())
         .build();
 
@@ -42,19 +55,18 @@ public class OkHttpRequestClient implements RequestClient {
   }
 
   private Response makeRequest(Request request) {
-    log.debug("Making HTTP " + request.method() + " request to the API:" +
-        "\nHeaders: " + request.headers().toString() +
-        "\nBody: " + request.body());
-
     try {
       final com.squareup.okhttp.Response response = getResponse(request);
+      final Headers headers = response.headers();
+      final int statusCode = response.code();
+      final String body = response.body().string();
 
       log.debug("Getting HTTP response from the API:" +
-          "\nHeaders: " + response.headers().toString() +
-          "\nResponse Code: " + response.code() +
-          "\nBody: " + response.body());
+          //"\nHeaders: " + headers.toString() +
+          "\nResponse code: " + statusCode +
+          "\nBody: " + body);
 
-      return new Response(response.body().string(), response.headers(), response.code());
+      return new Response(body, headers, statusCode);
 
     } catch (IOException e) {
       String message = "IO exception has been occurred while making HTTP request to the API: " + e.getMessage();
